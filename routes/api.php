@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::as('api.') ->group( function () {
+Route::as('api.')->group(function () {
     Route::apiResource('user', 'UserController', ['only' => ['index', 'store']]);
 
     Route::middleware('auth:api')->group(function () {
         Route::get('/me', 'UserController@show')->name('me.show');
         Route::put('/me', 'UserController@update')->name('me.update');
+    });
+
+    Route::apiResource('game', 'GameController', ['only' => ['index', 'show', 'store', 'update']]);
+    Route::prefix('game/{game}')->as('game.')->group(function () {
+        Route::post('join', 'GameController@join')->name('join');
+        Route::delete('left', 'GameController@left')->name('left');
+        Route::post('invite', 'GameController@invite')->name('invite');
+        Route::post('kick', 'GameController@kick')->name('kick');
+        Route::post('score', 'GameController@addScore')->name('score');
     });
 });

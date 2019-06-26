@@ -32,4 +32,11 @@ class UserRepository extends BaseRepository
     {
         return User::class;
     }
+
+    public function addScore(User $user, $score)
+    {
+        $user->score += $score;
+
+        $user->save();
+    }
 }

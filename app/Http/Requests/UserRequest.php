@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+
 class UserRequest extends BaseRequest
 {
 
@@ -22,7 +24,11 @@ class UserRequest extends BaseRequest
     protected function putRules()
     {
         return [
-            'email' => 'filled|unique:users,email|email',
+            'email' => [
+                'filled',
+                Rule::unique('users')->ignore($this->user('api')->getKey(), 'id'),
+                'email'
+                ],
             'password' => 'filled|string|min:6',
             'name' => 'filled|string|between:1,255'
         ];

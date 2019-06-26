@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Devolon
+                    o/ devolon
                 </div>
             </div>
         </div>
